@@ -1,6 +1,3 @@
-#importamos primero las librearias
-import math
-from functools import reduce
 #1. Escribe una función que reciba una cadena de texto como parámetro y devuelva un diccionario con las frecuencias de cada letra en la cadena. Los espacios no deben ser considerados.
 def frecuencia_letras(texto):
     # Primero, quitamos los espacios en blanco y lo pasamos todo a minúsculas para no duplicar letras (A != a)
@@ -109,8 +106,7 @@ def promedio_lista(lista_numeros):
     # Comprobamos si la lista tiene longitud 0 (está vacía)
     if len(lista_numeros) == 0:
         # raise fuerza a Python a lanzar un error con nuestro mensaje personalizado
-        raise Exception("Error: La lista está vacía.")
-    
+       raise ValueError("La lista está vacía.")
     # Si no está vacía, calculamos el promedio: suma total entre la cantidad de elementos
     return sum(lista_numeros) / len(lista_numeros)
 
@@ -205,9 +201,11 @@ cubo = lambda x: x ** 3
 
 
 #22. Dada una lista numérica, obtén el producto total de los valores de dicha lista.Usa la función reduce() .
+#importamos libreria
+from functools import reduce
 def producto_total(lista_numeros):
     # reduce() va multiplicando cada elemento por el acumulado anterior
-    return reduce(lambda x, y: x * y, lista_numeros)
+    return list(filter(lambda x: isinstance(x, int) and not isinstance(x, bool), lista_numeros))
 
 
 #23. Concatena una lista de palabras.Usa la función reduce() .
@@ -333,8 +331,8 @@ class Arbol:
         
     def crecer_ramas(self):
         # Recorremos la lista de ramas
-        for rama in self.ramas:
-            rama += 1 
+        for i in range(len(self.ramas)):
+            self.ramas[i] += 1
             
     def quitar_rama(self, posicion):
         try:
@@ -372,7 +370,7 @@ class UsuarioBanco:
         self.saldo -= cantidad
         
     def agregar_dinero(self, cantidad):
-        self.saldo + cantidad 
+        self.saldo += cantidad 
         
     def transferir_dinero(self, otro_usuario, cantidad):
         if otro_usuario.saldo < cantidad:
@@ -405,8 +403,7 @@ def reemplazar_palabras(texto, original, nueva):
 
 def eliminar_palabra(texto, palabra):
     # Utilizamos el método replace para eliminar la palabra
-    texto.replace(palabra, "")
-    return texto 
+    return texto.replace(palabra, "").replace("  ", " ").strip()
 
 def procesar_texto(texto, opcion, *args):
     if opcion == "contar":
@@ -450,6 +447,8 @@ def calificacion_texto(nota):
 
 #40. Escribe una función que tome dos parámetros: figura (una cadena que puede ser "rectangulo" , "circulo" o
 #"triangulo" ) y datos (una tupla con los datos necesarios para calcular el área de la figura).
+#importamos libreria
+import math
 def area_figura(figura, datos):
     figura = figura.lower()
     if figura == "rectangulo":
@@ -479,7 +478,7 @@ def tienda_online():
     precio = float(input("Ingresa el precio del artículo: "))
     tiene_cupon = input("¿Tienes un cupón de descuento? (sí/no): ").strip().lower()
 
-    if tiene_cupon == "sí" or "si": 
+    if tiene_cupon in ["sí", "si"]: 
         valor_cupon = float(input("Ingresa el valor del cupón: "))
         if valor_cupon > 0:
             precio_final = precio - valor_cupon
